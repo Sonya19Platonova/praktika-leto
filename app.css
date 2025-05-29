@@ -5,7 +5,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   background-color: #000000;
   color: #FFFFFF;
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -157,19 +157,19 @@ th {
 .release-title {
   font-size: 30px;
   margin: 20px 0 5px;
-  color: #fff;
+  color: #FFFFFF;
 }
 
 .release-prod {
   font-size: 30px;
   margin: 0;
-  color: #fff;
+  color: #FFFFFF;
 }
 
 .release-description {
   font-size: 24px;
   line-height: 1;
-  color: #aaa;
+  color: #696969;
 }
 
 .release-image {
@@ -334,7 +334,7 @@ th {
   color: #696969;
   text-align: center;
   padding-top: 20px;
-  border-top: 1px solid #333;
+  border-top: 1px solid #696969;
 }
 
 /* Страница Биография */
@@ -343,7 +343,7 @@ th {
   max-width: 800px;
   margin: 50px auto;
   padding: 0 20px;
-  color: #fff;
+  color: #FFFFFF;
 }
 
 .biografy-page .biografy-title {
@@ -369,7 +369,7 @@ th {
   max-width: 1200px;
   margin: 50px auto;
   padding: 0 20px;
-  color: #fff;
+  color: #FFFFFF;
 }
 
 .music-page .section-title {
@@ -496,7 +496,7 @@ th {
 
 .media-page .backstage-text {
   max-width: 45%; 
-  font-size: 1.1rem;
+  font-size: 18px;
   line-height: 1.6;
   text-align: justify;
   color: #696969;
@@ -626,7 +626,6 @@ th {
   color: #FFFFFF;
   margin: 0 0 50px;
   font-size: 18px;
-  color: #FFFFFF;
   text-decoration: none;
 }
 
@@ -644,7 +643,7 @@ th {
   }
   
   .main-image img {
-    max-height: 50vh;
+    max-height: 50%;
   }
   
   .section-title {
@@ -740,7 +739,7 @@ th {
   /* Страница Медиа */
 
   .media-page .media-title {
-    font-size: 2.5rem;
+    font-size: 40px;
   }
   
   .media-page .collab-images {
@@ -772,7 +771,7 @@ th {
   }
 
   .media-page .backstage-title {
-    font-size: 1.4rem; 
+    font-size: 22px; 
     text-align: center;
     margin-top: 10px;
     padding: 10px; 
@@ -781,7 +780,7 @@ th {
   .media-page .backstage-text {
     max-width: none; 
     width: calc(100% - 40px); 
-    font-size: 1rem; 
+    font-size: 16px; 
     text-align: justify;
     padding-left:20px;
     padding-right:20px;
@@ -849,8 +848,3 @@ th {
     font-size:16px;
   }
 }
-
-
-
-
-
