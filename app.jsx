@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
-import Contacts from './contacts.jsx';
-import Biografy from './biografy.jsx';
-import Music from './music.jsx';
-import Media from './media.jsx';
+import Contacts from './pages/contacts/contacts.jsx';
+import Biografy from './pages/biografy/biografy.jsx';
+import Music from './pages/music/music.jsx';
+import Media from './pages/media/media.jsx';
 
 import './App.css';
 import instasamkaImage from './img/INSTASAMKA1.png';
@@ -18,6 +18,10 @@ import shop7 from './img/shop7.jpg';
 import shop8 from './img/shop8.png';
 import shop9 from './img/shop9.jpg';
 import boss from './img/BOSS.png';
+
+import { NewReliz } from './components/new-reliz';
+
+const data = [{title:'INSTASAMKA - BOSS', title1:'prod. realmoneyken', img:boss, alt:'BOSS 2025', link:'https://music.yandex.ru/album/36376370/track/138562177?utm_source=web&utm_medium=copy_link'}]
 
 function App() {
   return (
@@ -98,15 +102,14 @@ function MainPage() {
       </section>
 
       {/* Новый релиз */}
+      
       <section id="new-release" className="section">
         <h1 className="section-title">НОВЫЙ РЕЛИЗ</h1>
         
         <div className="release-container">
-          <div className="release-image">
-            <img src={boss} alt="BOSS" className="boss-cover" />
-            <h2 className="release-title">INSTASAMKA - BOSS</h2>
-            <h2 className="release-prod">prod. realmoneyken</h2> 
-          </div>
+
+          {data.map(el=><NewReliz title={el.title} title1={el.title1} img={el.img} alt={el.alt} link={el.link}/>)}
+
         </div>
       </section>
 
