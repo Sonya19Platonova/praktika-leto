@@ -1,0 +1,254 @@
+/* Базовые стили */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #000000;
+  color: #FFFFFF;
+  min-height: 100%;
+  display: flex;            /* Включает flex-контейнер */
+  justify-content: center;  /* Центр по горизонтали */
+  align-items: center;      /* Центр по вертикали */
+}
+
+.app {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;  /* Вертикальное расположение, друг под другом */
+  align-items: center;
+}
+
+/* Шапка */
+.header {
+  background-color: #000000;
+  padding: 20px 0;
+  display: flex;
+  align-items: center;    
+  width: 100%;
+  box-sizing: border-box;   /* Учитывает padding в ширине */
+  text-align: center; 
+  gap: 30px;  
+
+}
+
+.nav-group {
+  display: flex;
+  gap: 70px;
+  margin: 10px 20px;
+  justify-content: center;
+}
+
+.logo {
+  font-size: 55px;
+  color: #FFFFFF;
+  font-weight: bold;    /* Жирный шрифт */
+  text-align: center;
+}
+
+.logo:hover {
+  color: #8B0000;
+}
+
+.nav-link {
+  color: #FFFFFF;
+  text-decoration: none;  /* Без подчеркивания ссылок */
+  font-size: 35px;
+  white-space: nowrap;    /* Не переносит текст на новую строку */
+}
+
+.nav-link:hover {
+  color: #8B0000;
+}
+
+/* Главная картинка */
+.main-image {
+  text-align: center;
+  margin: 30px auto;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.main-image img {
+  max-height: 770px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;   /* Полностью помещается в контейнер */
+}
+
+/* Секции */
+.section {
+  background-color: #000000;
+  font-size: 30px;
+  margin: 30px auto;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 55px;
+  margin: 0 auto 30px;
+  text-align: left;
+  width: 100%;
+}
+
+/* Страница Контакты */
+
+.contacts-page {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contacts-page .section-title {
+  font-size: 48px;
+  text-align: left;
+  margin-bottom: 50px;
+  text-transform: uppercase;  /* Заглавные буквы */
+}
+
+.contacts-page .contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 150px;
+  max-width: 1200px;
+  margin: 0; 
+  padding-left: 20px; 
+}
+
+.contacts-page .contact-card {
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0; 
+}
+
+.contacts-page .contact-item {
+  display: flex; 
+  align-items: center;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.contacts-page .social-icon {
+  width: 50px;
+  height: 50px; 
+  object-fit: contain; 
+  margin-right: 15px;
+  flex-shrink: 0; 
+}
+
+.contacts-page .contact-text {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.contacts-page .contact-label {
+  font-size: 16px;
+  margin: 0 0 5px 0;
+  text-align: left; 
+}
+
+.contacts-page .contact-link {
+  font-size: 14px;
+  color: #FFFFFF;
+  text-decoration: underline;
+  text-align: left;
+}
+
+.contacts-page .contact-link:hover {
+  text-decoration: underline;   /* Подчеркивание текста */
+  color: #8B0000;
+}
+
+.contacts-page .disclaimer {
+  margin-top: 50px;
+  font-size: 14px;
+  color: #696969;
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #696969;
+}
+
+/* Адаптив */
+@media (max-width: 1000px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .nav-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .main-image img {
+    max-height: 50%;
+  }
+  
+  .section-title {
+    font-size: 50px;
+  }
+  
+  .release-title {
+    font-size: 36px;
+  }
+
+  .release-prod {
+    font-size: 36px;
+  }
+  
+  .shop-row img {
+    max-width: 100%;
+  }
+  
+  .contact-block {
+    width: 100%;
+  }
+  
+  .nav-link {
+    font-size: 20px;
+  }
+  
+  .logo {
+    font-size: 30px;
+  }
+  
+  .concert-link {
+    font-size: 20px;
+  }
+
+  .contact-info {
+    font-size: 20px;
+  }
+
+  /* Страница Контакты */
+
+  .contacts-page .logo-text {
+    font-size: 48px;
+  }
+  
+  .contacts-page .section-title {
+    font-size: 36px;
+  }
+  
+  .contacts-page .contacts-grid {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .contacts-page .contacts-column {
+    width: 100%;
+  }
+}
+
+
+
+
+
