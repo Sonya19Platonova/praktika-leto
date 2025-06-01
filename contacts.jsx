@@ -1,6 +1,6 @@
 import React from 'react'; 
 import { Link } from 'react-router-dom';
-import './App.css';
+import './contacts.css';
 
 import instasamkaImage from './img/INSTASAMKA1.png';
 import instagram from './img/instagram.png';
@@ -13,6 +13,20 @@ import youtube from './img/youtube.png';
 import tiktok from './img/tiktok.png';
 import email from './img/email.png';
 
+import { CardContact } from '../../components/card-contact';
+
+const data = [
+  {label:'Instagram*', title:'@instasamka', img:instagram, alt:'Instagram*', link:'https://instagram.com/instasamka/'},
+  {label:'Facebook*', title:'facebook.com/instasamka', img:facebook, alt:'Facebook*', link:'https://www.facebook.com/instasamka'},
+  {label:'Telegram', title:'t.me/instasamkacore', img:telegram, alt:'Telegram', link:'tg://resolve?domain=instasamkacore'},
+  {label:'ВКонтакте', title:'vk.com/instasamka', img:vk, alt:'ВКонтакте', link:'https://vk.com/instasamka'},
+  {label:'Twitch', title:'prod. realmoneyken', img:twitch, alt:'Twitch', link:'https://www.twitch.tv/kensamka'},
+  {label:'Дзен', title:'dzen.ru/instasamka', img:dzen, alt:'Дзен', link:'https://dzen.ru/instasamka'},
+  {label:'YouTube', title:'youtube.com/@INSTASAMKA', img:youtube, alt:'YouTube', link:'https://www.youtube.com/c/INSTASAMKA'},
+  {label:'TikTok', title:'tiktok.com/@instasamka', img:tiktok, alt:'TikTok', link:'https://www.tiktok.com/@instasamka'},
+  {label:'E-mail', title:'maxim@namnecash.ru', img:email, alt:'E-mail', link:''},
+  {label:'БУКИНГ АРТИСТА', title:'+7 (964) 728-78-88', img:email, alt:'БУКИНГ АРТИСТА', link:''},
+]
 
 function Contacts() {
   return (
@@ -44,93 +58,10 @@ function Contacts() {
         <h1 className="section-title">КОНТАКТЫ</h1>
 
         <div className="contacts-grid">
-          {/* Левый столбец */}
-          <div className="contacts-column">
-            
-            <div className="contact-item">
-              <img src={instagram} alt="Instagram" className="social-icon" />
-              <div>
-                <p className="contact-label">Instagram*</p>
-                <a href="#" className="contact-link">@instasamka</a>
-              </div>
-            </div>
 
-            <div className="contact-item">
-              <img src={telegram} alt="Telegram" className="social-icon" />
-              <div>
-                <p className="contact-label">Telegram</p>
-                <a href="#" className="contact-link">t.me/instasamkacore</a>
-              </div>
-            </div>
+          {data.map(el=><CardContact label={el.label} title={el.title} img={el.img} alt={el.alt} link={el.link}/>)}
 
-            <div className="contact-item">
-              <img src={twitch} alt="Twitch" className="social-icon" />
-              <div>
-                <p className="contact-label">Twitch</p>
-                <a href="#" className="contact-link">twitch.tv/ikensamka</a>
-              </div>
-            </div>
-
-            <div className="contact-item">
-              <img src={youtube} alt="YouTube" className="social-icon" />
-              <div>
-                <p className="contact-label">YouTube</p>
-                <a href="#" className="contact-link">youtube.com/@INSTASAMKA</a>
-              </div>
-            </div>
-
-            <div className="contact-item">
-              <img src={email} alt="Email" className="social-icon" />
-              <div>
-                <p className="contact-label">E-mail</p>
-                <a href="#" className="contact-link">maxim@namnecash.ru</a>
-              </div>
-            </div>
-          </div>
-
-          {/* Правый столбец */}
-          <div className="contacts-column">
-
-            <div className="contact-item">
-              <img src={facebook} alt="Facebook" className="social-icon" />
-              <div>
-                <p className="contact-label">Facebook*</p>
-                <a href="#" className="contact-link">facebook.com/instasamka</a>
-              </div>
-            </div>
-
-            <div className="contact-item">
-              <img src={vk} alt="ВКонтакте" className="social-icon" />
-              <div>
-                <p className="contact-label">ВКонтакте</p>
-                <a href="#" className="contact-link">vk.com/instasamka</a>
-              </div>
-            </div>
-
-            <div className="contact-item">
-              <img src={dzen} alt="Дзен" className="social-icon" />
-              <div>
-                <p className="contact-label">Дзен</p>
-                <a href="#" className="contact-link">dzen.ru/instasamka</a>
-              </div>
-            </div>
-
-            <div className="contact-item">
-              <img src={tiktok} alt="TikTok" className="social-icon" />
-              <div>
-                <p className="contact-label">TikTok</p>
-                <a href="#" className="contact-link">tiktok.com/@instasamka</a>
-              </div>
-            </div>
-
-            <div className="contact-item">
-              <img src={email} alt="Telephone" className="social-icon" />
-              <div>
-                <p className="contact-label">БУКИНГ АРТИСТА</p>
-                <a href="#" className="contact-link">+7 (964) 728-78-88</a>
-              </div>
-            </div>
-          </div>
+       
         </div>
 
         <div className="disclaimer">* Instagram и Facebook принадлежат компании Meta, признанной экстремистской организацией и запрещенной в РФ</div>
