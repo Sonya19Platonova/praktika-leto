@@ -1,6 +1,6 @@
 import React from 'react'; 
 import { Link } from 'react-router-dom';
-import './App.css';
+import './media.css';
 
 import instasamkaImage from './img/INSTASAMKA1.png';
 
@@ -45,15 +45,21 @@ function Media() {
 
         <div className="collaboration">
           <div className="collab-images">
-            <img src={blackRussia} alt="BLACK RUSSIA" className="collab-image" />
+            <a href="https://vkvideo.ru/playlist/-182863061_-2/video-182863061_456242488" target="_blank" rel="noopener noreferrer">
+              <img src={blackRussia} alt="BLACK RUSSIA" className="collab-image" />
+            </a>
           </div>
-          <h3 className="collab-title">INSTASAMKA x BLACK RUSSIA</h3>
+          <a href="https://vkvideo.ru/playlist/-182863061_-2/video-182863061_456242488" target="_blank" rel="noopener noreferrer">
+            <h3 className="collab-title">INSTASAMKA x BLACK RUSSIA</h3>
+          </a>
         </div>
 
         <div className="backstage">
           <div className="backstage-content">
-            <img src={backstage} alt="BACKSTAGE" className="backstage-image" />
-            <h3 className="backstage-title">BACKSTAGE как снимали INSTASAMKA - BLACK RUSSIA</h3>
+            <a href="https://vkvideo.ru/playlist/-182863061_-2/video-182863061_456242497?t=4m56s" target="_blank" rel="noopener noreferrer">
+              <img src={backstage} alt="BACKSTAGE" className="backstage-image" />
+              <h3 className="backstage-title">BACKSTAGE как снимали INSTASAMKA - BLACK RUSSIA</h3>
+            </a>
           </div>
           <p className="backstage-text">
             Instasamka снова взрывает интернет своим новым клипом – это армада в аплодисментах дерзкой эстетики, 
@@ -67,16 +73,21 @@ function Media() {
         {/* Клипы */}
         <h1 className="section-title">КЛИПЫ</h1>
         <div className="clip">
-       
-          <div className="clip-item">
-            <img src={pampimclip} alt="Пампим" className="clip-image" />
-            <p className="clip-title">INSTASAMKA - Пампим нефть (Премьера клипа, 2024)</p>
-          </div>
 
           <div className="clip-item">
-            <img src={marmeladclip} alt="Мармелад" className="clip-image" />
-            <p className="clip-title">INSTASAMKA - Мой мармеладный (Премьера клипа, 2024)</p>
+            <a href="https://vkvideo.ru/video-182863061_456242498" target="_blank" rel="noopener noreferrer">
+              <img src={pampimclip} alt="Пампим" className="clip-image" />
+              <p className="clip-title">INSTASAMKA - Пампим нефть (Премьера клипа, 2024)</p>
+            </a>
           </div>
+          
+          <div className="clip-item">
+            <a href="https://vkvideo.ru/video-182863061_456242164?t=38s" target="_blank" rel="noopener noreferrer">
+              <img src={marmeladclip} alt="Мармелад" className="clip-image" />
+              <p className="clip-title">INSTASAMKA - Мой мармеладный (Премьера клипа, 2024)</p>
+            </a>
+          </div>
+          
 
         </div>
       </section>
@@ -102,15 +113,19 @@ function Media() {
         <div className="contacts-container">
           <div className="contacts-left">
             
-            <div className="contact-block">
-              <h2 className="contact-subtitle">YOUTUBE</h2>
-              <a href="#" className="contact-info">youtube.com/@INSTASAMKA</a>
-            </div>
+            <a href="https://www.youtube.com/c/INSTASAMKA" target="_blank" rel="noopener noreferrer">
+              <div className="contact-block">
+                <h2 className="contact-subtitle">YOUTUBE</h2>
+                <h2 className="contact-info">youtube.com/@INSTASAMKA</h2>
+              </div>
+            </a>
 
-            <div className="contact-block">
-              <h2 className="contact-subtitle">VK ВИДЕО</h2>
-              <a href="#" className="contact-info">vkvideo.ru/@instasamka</a>
-            </div>
+            <a href="https://www.youtube.com/c/INSTASAMKA" target="_blank" rel="noopener noreferrer">
+              <div className="contact-block">
+                <h2 className="contact-subtitle">VK ВИДЕО</h2>
+                <h2 className="contact-info">vkvideo.ru/@instasamka</h2>
+              </div>
+            </a>
 
           </div>
         </div>
