@@ -1,6 +1,6 @@
 import React from 'react'; 
 import { Link } from 'react-router-dom';
-import './App.css';
+import './biografy.css';
 
 import instasamkaImage from './img/INSTASAMKA1.png';
 
@@ -38,44 +38,85 @@ function Biografy() {
           <p>В 2017 году начала снимать видео разговорного жанра и короткие комедийные ролики — вайны; 
             публиковала их в Instagram под псевдонимом «Президентша». Позже псевдоним был изменён на «Instasamka».</p>
           
-          <p>В июне 2019 года выпустила свой первый музыкальный альбом <strong>Born to Flex</strong> в жанре рэп, 
+          <p>В июне 2019 года выпустила свой первый музыкальный альбом 
+            <a href="https://www.youtube.com/watch?v=OiRHVkp_vBs" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+            <strong> «Born to Flex» </strong></a> в жанре рэп, 
             содержащий 12 сольных композиций общей длительностью 26 минут.</p>
           
-          <p>За 2020 год Инстасамкой было выпущено три альбома: сольные — <strong>Mamacita</strong> и <strong>«Спасибо папаша»</strong>, 
-            а также совместный с Moneyken — <strong>«Семейный бизнес»</strong>. Последний после релиза дебютировал 
+          <p>За 2020 год Инстасамкой было выпущено три альбома: сольные — 
+            <a href="https://music.yandex.ru/album/10294760?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+            <strong> «Mamacita» </strong></a> и  
+            <a href="https://music.yandex.ru/album/11013231?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+            <strong> «Спасибо папаша»</strong></a>, 
+            а также совместный с Moneyken — 
+            <a href="https://music.yandex.ru/album/13265770?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+            <strong>«Семейный бизнес»</strong></a>. Последний после релиза дебютировал 
             на первое место альбомного чарта российского сегмента Apple Music.</p>
 
           <p>С конца 2020 года многие чартерные синглы Инстасамки становились широко известны в TikTok ещё до их официального релиза. 
           Согласно исследованию аналитического агентства Brand Analytics, аккаунт Дарьи в данной соцсети по состоянию на февраль 2021 года 
           был одним из <strong>самых популярных</strong> в России. </p>
           
-          <p> В ноябре 2021 года выпустила сольный <strong>альбом Moneydealer</strong>. 
-          В релиз вошло 7 композиций общей длительностью 14 минут. Две из них —<strong> «Lipsi Ha»</strong> и <strong>«Juicy»</strong> 
+          <p> В ноябре 2021 года выпустила сольный 
+            <a href="https://music.yandex.ru/album/19332695?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+            <strong> альбом «Moneydealer»</strong></a>. 
+          В релиз вошло 7 композиций общей длительностью 14 минут. Две из них —
+          <a href="https://music.yandex.ru/album/19332695/track/90569161?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Lipsi Ha»</strong></a> и 
+          <a href="https://music.yandex.ru/album/19332695/track/84894425?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Juicy» </strong></a> 
           — ранее выпущенные синглы. 
           По итогам 2021 года Moneydealer вошёл в список лучших альбомов за год, 
           по версии музыкального журналиста Антона Вагина из издания «РБК Стиль», и расположился на 22 месте топ-50 
           отечественных альбомов года, по версии музыкального портала The Flow. </p>
         
           <p> Летом 2022 года Инстасамка выпустила лонг-плей на 15 треков в жанре 
-          рэп под названием <strong>Queen of Rap</strong>, общая длительность которого составила 33 минуты. 
+          рэп под названием 
+          <a href="https://music.yandex.ru/album/22823205?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Queen of Rap»</strong></a>, общая длительность которого составила 33 минуты. 
           После его релиза поменяла вектор развития творчества, сменив жанр музыки на поп. Один из синглов в новом жанре, 
-          вышедший 25 ноября, под названием <strong>«За деньги да»</strong>, дебютировал в чартах Apple Music России, 
+          вышедший 25 ноября, под названием 
+          <a href="https://music.yandex.ru/album/24375438/track/109140203?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «За деньги да»</strong></a>, дебютировал в чартах Apple Music России, 
           Москвы и Санкт-Петербурга, а также в чартах VK Музыки, Яндекс Музыки и YouTube Music.  </p>
           
           <p> Данный трек, а также ранее 
-          выпущенные синглы в новом жанре, а именно: <strong>«Popstar»</strong> и <strong>«Волосы назад»</strong>, 
-          вошли в дебютный полноформатный альбом Дарьи в жанре поп. <strong>Альбом Popstar</strong> вышел 16 декабря — 
+          выпущенные синглы в новом жанре, а именно: 
+          <a href="https://music.yandex.ru/album/24375438/track/107281308?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Popstar»</strong></a> и 
+          <a href="https://music.yandex.ru/album/24375438/track/108756423?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Волосы назад»</strong></a>, 
+          вошли в дебютный полноформатный альбом Дарьи в жанре поп. 
+          <a href="https://music.yandex.ru/album/24375438?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> Альбом «Popstar»</strong></a> вышел 16 декабря — 
           в его состав вошло 11 треков общей длительностью 25 минут. По итогам прошедшего года Инстасамка стала одной 
           из главных поп-звёзд России за 2022 год по оценкам издания Meduza. </p>
 
-          <p> В конце 2023 года вышло несколько треков: <strong>"Отключаю телефон"</strong>, <strong>"Жара"</strong>, 
-          <strong> "Тяги"</strong>, <strong>"Bestie"</strong>, а также дуэт с Лолитой – <strong>"На Титанике"</strong>.
-          В 2024 году Инстасамка выпустила синглы <strong>"Грустный дэнс"</strong>, <strong>"Мой мармеладный"</strong> 
-          (кавер на песню Кати Лель) и <strong>"Пампим нефть"</strong>.</p>
+          <p> В конце 2023 года вышло несколько треков: 
+          <a href="https://music.yandex.ru/album/24945899/track/111556054?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Отключаю телефон»</strong></a>, 
+          <a href="https://music.yandex.ru/album/25237046/track/112328515?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Жара»</strong></a>, 
+          <a href="https://music.yandex.ru/album/25596005/track/113194195?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Тяги»</strong></a>, 
+          <a href="https://music.yandex.ru/album/25889157/track/113902874?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Bestie»</strong></a>, а также дуэт с Лолитой – 
+          <a href="https://music.yandex.ru/album/28144280/track/119108048?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «На Титанике»</strong></a>.
+          В 2024 году Инстасамка выпустила синглы 
+          <a href="https://music.yandex.ru/album/29527280/track/122176893?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Грустный дэнс»</strong></a>, 
+          <a href="https://music.yandex.ru/album/30000006/track/123241303?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Мой мармеладный» </strong></a>
+          (кавер на песню Кати Лель) и 
+          <a href="https://music.yandex.ru/album/30565417/track/124503431?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Пампим нефть»</strong></a>.</p>
           
           <p>В октябре 2024 года в Telegram-канале <strong>группы "Ленинград"</strong> появилась информация о том, 
           что певица Instasamka станет их солисткой. 
-          Уже 8 ноября 2024 года вышел совместный альбом Инстасамки и группы "Ленинград" -<strong> «Бумеры и зумеры»</strong>. 
+          Уже 8 ноября 2024 года вышел совместный альбом Инстасамки и группы "Ленинград" -
+          <a href="https://music.yandex.ru/album/33939785?utm_source=web&utm_medium=copy_link" target="_blank" rel="noopener noreferrer" className='biografy-link'>
+          <strong> «Бумеры и зумеры»</strong></a>. 
           Их совместная работа с Инстасамкой над альбомом проходила «игриво и легко», однако, они не думали о продолжении 
           совместного творчества.</p>
 
