@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './contacts.css';
 
@@ -29,6 +29,17 @@ const data = [
 ]
 
 function Contacts() {
+  
+  // Пролистывание
+
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    if (headerRef.current) {
+      headerRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
+  
   return (
     <div className="app">
       {/* Шапка */}
@@ -55,7 +66,7 @@ function Contacts() {
 
        {/* Контакты */}
       <section id="contact" className="contacts-page">
-        <h1 className="section-title">КОНТАКТЫ</h1>
+        <h1 ref={headerRef} className="section-title">КОНТАКТЫ</h1>
 
         <div className="contacts-grid">
 
@@ -66,6 +77,16 @@ function Contacts() {
 
         <div className="disclaimer">* Instagram и Facebook принадлежат компании Meta, признанной экстремистской организацией и запрещенной в РФ</div>
       </section>
+
+
+      {/* Кнопка "Вверх" */}
+
+      <button 
+        className="scroll-to-top" 
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label="Наверх">
+        ↑
+      </button>
 
     </div>
   );
