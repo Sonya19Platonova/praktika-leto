@@ -74,7 +74,7 @@ function MainPage() {
           <table>
             <thead>
               <tr>
-                <th>МАРТ</th>
+                <th>АВГУСТ</th>
                 <th>ДАТА</th>
               </tr>
             </thead>
@@ -83,15 +83,15 @@ function MainPage() {
                 <td colSpan="5"><div className="table-divider"></div></td>
               </tr>
               <tr>
-                <td><a href="#" className="concert-link">САНКТ-ПЕТЕРБУРГ</a></td>
-                <td><a href="#" className="concert-link">06.08.2025</a></td>
+                <td><a href="https://afisha.yandex.ru/saint-petersburg/concert/instasamka-2025-08-05?source=artist" className="concert-link">САНКТ-ПЕТЕРБУРГ</a></td>
+                <td><a href="https://afisha.yandex.ru/saint-petersburg/concert/instasamka-2025-08-05?source=artist" className="concert-link">05.08.2025</a></td>
               </tr>
               <tr className="divider-row">
                 <td colSpan="5"><div className="table-divider"></div></td>
               </tr>
               <tr>
-                <td><a href="#" className="concert-link">МОСКВА</a></td>
-                <td><a href="#" className="concert-link">09.08.2025</a></td>
+                <td><a href="https://afisha.yandex.ru/moscow/concert/instasamka-2025-08-08?source=artist" className="concert-link">МОСКВА</a></td>
+                <td><a href="https://afisha.yandex.ru/moscow/concert/instasamka-2025-08-08?source=artist" className="concert-link">08.08.2025</a></td>
               </tr>
               <tr className="divider-row">
                 <td colSpan="5"><div className="table-divider"></div></td>
@@ -162,6 +162,17 @@ function MainPage() {
           </div>
         </div>
       </section>
+
+
+      {/* Кнопка "Вверх" */}
+
+      <button 
+        className="scroll-to-top" 
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label="Вверх">
+        ↑
+      </button>
+
     </div>
   );
 }
