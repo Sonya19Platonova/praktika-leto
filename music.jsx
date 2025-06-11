@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React, { useState, useEffect, useRef, useReducer, createContext, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './music.css';
 
@@ -217,203 +217,339 @@ const data = [
 
 ]
 
-function Music() {
+// Контекст для обмена данными между компонентами
+const LyricsContext = createContext();  
+
+// Начальное состояние
+const initialState = {
+  lyrics: {},              // Объект с URL текстов песен
+  loading: false,          // Состояние загрузки: идет или не идет
+  error: null,             // В начале ошибок нет
+  currentSong: null        // Название текущей песни для отображения статуса
+};
+
+// Управление состоянием
+function lyricsReducer(state, action) {
+  if (action.type === 'FETCH_START') {    // Начало загрузки текста песни
+    return {
+      ...state,                           // Состояние, основанное на текущем
+      loading: true,                      // Состояние загрузки: идет
+      error: null,                        // Нет ошибок 
+      currentSong: action.payload,        // Устанавливается название песни
+    };
+  } else if (action.type === 'FETCH_SUCCESS') {    // Окончание загрузки текста песни
+    return {
+      ...state,
+      loading: false,                                                            // Состояние загрузки: не идет (завершено)
+      lyrics: { ...state.lyrics, [action.payload.song]: action.payload.url },    // Добавляет новую пару "песня: url", сохраняя пары до этого
+      currentSong: null,                                                         // Нет названия для поиска
+    };
+  } else if (action.type === 'FETCH_ERROR') {   //Ошибка загрузки
+    return {
+      ...state,
+      loading: false,                           // Состояние загрузки: не идет (произошла ошибка) 
+      error: action.payload,                    // Сохранение ошибки 
+      currentSong: null,                        // Сброс названия песни
+    };
+  } else {
+    return state;                               // По умолчанию возвращаем исходное состояние (если действие неизвестно)
+  }
+}
+
+// Компонент для отображения ссылки на текст песни
+const SongLyrics = ({ songTitle }) => {                     // songTitle - название песни для поиска
+  const { state, dispatch } = useContext(LyricsContext);    // Подключение к состоянию и функции dispatch. state - текущее состояние, dispatch - отправка действия
+  const [isVisible, setIsVisible] = useState(false);        // Состояние. Изначально - false, ссылка не показывается
+
+  useEffect(() => {
+    if (isVisible && !state.lyrics[songTitle]) {            // Срабатывает при изменении isVisible или если нет URL для песни
+      fetchLyricsUrl(songTitle);                            // Вызывается функция fetchLyricsUrl для загрузки URL
+    }
+  }, [isVisible, songTitle]);
+
+  const fetchLyricsUrl = async (song) => {                  // async (асинхронная функция) для await
+    dispatch({ type: 'FETCH_START', payload: song });       // Отправление состояние, чтобы показать начало загрузки
+    try {
+      const CLIENT_ACCESS_TOKEN = '_3Hvm7rRvCFl_ZUpzYAhToqM6oRxbp57PzO5cUf4DD0ZvIYJSvosRIMJsMWPVZQK';  // Авторизация API Genius
+      
+      // Поиск песни по названию
+      const searchResponse = await fetch(                   // await (ожидание завершения и получения результата)
+        `https://api.genius.com/search?q=${encodeURIComponent(`Instasamka ${song}`)}&access_token=${CLIENT_ACCESS_TOKEN}`  //Поиск по строке "Instasamka песня"
+      );
+      const searchData = await searchResponse.json();   // JSON-объект с результатами поиска
+
+      if (!searchData.response.hits.length) {      // Если нет совпадений - ошибка
+        throw new Error('Песня не найдена');       // throw (прерывание функции) и создание нового объекта
+      }
+
+      // Получение информации о песне (URL)
+      const songId = searchData.response.hits[0].result.id;       // Получение ID первой найденной песни
+      const songResponse = await fetch(
+        `https://api.genius.com/songs/${songId}?access_token=${CLIENT_ACCESS_TOKEN}`  // Запрос для получение URL по найденному ID
+      );
+      const songData = await songResponse.json();     
+      
+      const lyricsUrl = songData.response.song.url;     // Получение URL с текстом нужной песни
+
+      dispatch({                                // Состояние: загрузка завершена. Отправляется пара "песня, URL"
+        type: 'FETCH_SUCCESS', 
+        payload: { song, url: lyricsUrl } 
+      });
+    } catch (error) {
+      dispatch({                                // Состояние: ошибка
+        type: 'FETCH_ERROR', 
+        payload: error.message 
+      });
+    }
+  };
+
+  const toggleVisibility = () => {      // Переключение состояния isVisible между true и false
+    setIsVisible(!isVisible);
+  };
+
   return (
-    <div className="app">
-      {/* Шапка */}
-      <header className="header">
-        <div className="nav-group">
-          <Link to="/biografy" className="nav-link">БИОГРАФИЯ</Link>
-          <Link to="/media" className="nav-link">МЕДИА</Link>
+    <div className="song-container">
+      <h3 
+        className="text-title"
+        onClick={toggleVisibility}                                              // После клика вызывается toggleVisibility
+        style={{ cursor: 'pointer', color: isVisible ? '#8B0000' : 'inherit' }}>   {/* Курсор - указатель, цвет: true - темнокрасный, false - какой был */}
+
+        {songTitle} {isVisible ? '-' : '+'}                                     {/* Отображается название песни и символы "+" или "-" */}
+      </h3>
+      
+      {state.loading && state.currentSong === songTitle && <p className='loading'>Загрузка...</p>}   {/* Если состояние - загрузка, то сообщение "Загрузка" */}
+      {state.error && <p className="error">{state.error}</p>}                                        {/* Если состояние - ошибка, то сообщение "Ошибка" */}                                   
+       
+      {isVisible && state.lyrics[songTitle] && (                       // Если isVisible=true или URL загружен, то ссылка отображается
+        <div className="lyrics-text">
+          <a href={state.lyrics[songTitle]} target="_blank" rel="noopener noreferrer" className='link-text-song'>
+            Посмотреть текст песни на Genius </a>
         </div>
-
-        <div className="nav-group">
-          <Link to="/" className="logo">INSTASAMKA</Link>
-        </div>
-
-        <div className="nav-group">
-          <Link to="/music" className="nav-link" style={{ color: '#8B0000' }}>МУЗЫКА</Link>
-          <Link to="/contacts" className="nav-link">КОНТАКТЫ</Link>
-        </div>
-      </header>
-
-      {/* Главная картинка */}
-      <div className="main-image">
-        <img src={instasamkaImage} alt="Instasamka" />
-      </div>
-
-      {/* Музыка */}
-      <section className="music-page">
-
-        <h1 className="section-title">МУЗЫКА</h1>
-        
-        <div className="albums-grid">
-
-          {data.map(el=><CardMusic title={el.title} img={el.img} alt={el.alt} link={el.link}/>)}
-  
-        </div>
-
-        {/* Текста */}
-        <h1 className="text">ТЕКСТА</h1>
-        {/* Альбом 1 */}
-        <h3 className="text-title">BOSS 2025</h3> 
-
-        {/* Альбом 2 */}
-        <h3 className="text-title">АЛЬБОМ БУМЕРЫ И ЗУМЕРЫ 2024</h3>
-
-        {/* Альбом 3 */}
-        <h3 className="text-title">ТАК ХОЧУ 2024</h3>
-
-        {/* Альбом 4 */}
-        <h3 className="text-title">KENDALL 2024</h3>
-
-        {/* Альбом 5 */}
-        <h3 className="text-title">ТЫ И Я 2024</h3>
-
-        {/* Альбом 6 */}
-        <h3 className="text-title">ПАМПИМ НЕФТЬ 2024</h3>
-
-        {/* Альбом 7 */}
-        <h3 className="text-title">МОЙ МАРМЕЛАДНЫЙ 2024</h3>
-
-        {/* Альбом 8 */}
-        <h3 className="text-title">ГРУСТНЫЙ ДЭНС 2024</h3>
-
-        {/* Альбом 9 */}
-        <h3 className="text-title">СРЕДА 2023</h3>
-
-        {/* Альбом 10 */}
-        <h3 className="text-title">ЗАЛЕТАЙ В ТРЕНДЫ 2023</h3>
-
-        {/* Альбом 11 */}
-        <h3 className="text-title">НА ТИТАНИКЕ 2023</h3>
-
-        {/* Альбом 12 */}
-        <h3 className="text-title">АЛЬФА-САМКА 2023</h3>
-
-        {/* Альбом 13 */}
-        <h3 className="text-title">WHO I AM 2023</h3>
-
-        {/* Альбом 14 */}
-        <h3 className="text-title">МАЛЕНЬКИЙ САМОЛЕТ 2023</h3>
-
-        {/* Альбом 15 */}
-        <h3 className="text-title">БИЗНЕС КЛАСС 2023</h3>
-
-        {/* Альбом 16 */}
-        <h3 className="text-title">В МОЕЙ ГОЛОВЕ 2023</h3>
-
-        {/* Альбом 17 */}
-        <h3 className="text-title">BESTIE 2023</h3>
-
-        {/* Альбом 18 */}
-        <h3 className="text-title">ОТКЛЮЧАЮ ТЕЛЕФОН 2023</h3>
-
-        {/* Альбом 19 */}
-        <h3 className="text-title">АЛЬБОМ SPED UP ALBUM 2023</h3>
-
-        {/* Альбом 20 */}
-        <h3 className="text-title">ТЯГИ 2023</h3>
-
-        {/* Альбом 21 */}
-        <h3 className="text-title">ЖАРА 2023</h3>
-
-        {/* Альбом 22 */}
-        <h3 className="text-title">SHAKE 2022</h3>
-
-        {/* Альбом 23 */}
-        <h3 className="text-title">АЛЬБОМ POPSTAR 2022</h3>
-
-        {/* Альбом 24 */}
-        <h3 className="text-title">АЛЬБОМ QUEEN OF RAP 2022</h3>
-
-        {/* Альбом 25 */}
-        <h3 className="text-title">СНОВА? 2022</h3>
-
-        {/* Альбом 26 */}
-        <h3 className="text-title">MONEY DAY 2021</h3>
-
-        {/* Альбом 27 */}
-        <h3 className="text-title">ВИТОН 2 2021</h3>
-
-        {/* Альбом 28 */}
-        <h3 className="text-title">АЛЬБОМ MONEYDEALER 2021</h3>
-
-        {/* Альбом 29 */}
-        <h3 className="text-title">TERMINAL 2021</h3>
-
-        {/* Альбом 30 */}
-        <h3 className="text-title">ФАКТ 2021</h3>
-
-        {/* Альбом 31 */}
-        <h3 className="text-title">MOMMY 2021</h3>
-
-        {/* Альбом 32 */}
-        <h3 className="text-title">АЛЬБОМ СЕМЕЙНЫЙ БИЗНЕС 2020</h3>
-
-        {/* Альбом 33 */}
-        <h3 className="text-title">ГОБА 2020</h3>
-
-        {/* Альбом 34 */}
-        <h3 className="text-title">RPG 2020</h3>
-
-        {/* Альбом 35 */}
-        <h3 className="text-title">ВИТОН 2020</h3>
-
-        {/* Альбом 36 */}
-        <h3 className="text-title">WORD UP 2020</h3>
-
-        {/* Альбом 37 */}
-        <h3 className="text-title">АЛЬБОМ СПАСИБО ПАПАША 2020</h3>
-
-        {/* Альбом 38 */}
-        <h3 className="text-title">POLAROID 2020</h3>
-
-        {/* Альбом 39 */}
-        <h3 className="text-title">BLOODY PARTY 2020</h3>
-
-        {/* Альбом 40 */}
-        <h3 className="text-title">АЛЬБОМ MAMACITA 2020</h3>
-
-        {/* Альбом 41 */}
-        <h3 className="text-title">ИНТЕРВЬЮ 2020</h3>
-
-        {/* Альбом 42 */}
-        <h3 className="text-title">GTA 2019</h3>
-
-        {/* Альбом 43 */}
-        <h3 className="text-title">АЛЬБОМ BORN TO FLEX 2019</h3>
-        
-        {/* Альбом 44 */}
-        <h3 className="text-title">АЛЬБОМ ТРИПЛ МАЛЫШ 2019</h3>
-
-        {/* Альбом 45 */}
-        <h3 className="text-title">МЫ КРУТЫЕ 2019</h3>
-
-        {/* Альбом 46 */}
-        <h3 className="text-title">МОЕ ИМЯ ДАША 2019</h3>
-
-        {/* Альбом 47 */}
-        <h3 className="text-title">HEAVY METAL 2019</h3>
-
-        {/* Альбом 48 */}
-        <h3 className="text-title">НА ХОДУ 2019</h3>
-
-        {/* Альбом 49 */}
-        <h3 className="text-title">TRIPLE BABY TOUR 2019</h3>
-
-        {/* Альбом 50 */}
-        <h3 className="text-title">ARIFLAME 2019</h3>
-
-        {/* Альбом 51 */}
-        <h3 className="text-title">KUPIDON 2019</h3>
-
-        {/* Альбом 52 */}
-        <h3 className="text-title">SPLASH OUT 2019</h3>
-
-      </section>
-
+      )}
     </div>
+  );
+};
+
+function Music() {
+  const [state, dispatch] = useReducer(lyricsReducer, initialState);
+
+  // Пролистывание
+
+  const headerRef = useRef(null);
+  
+    useEffect(() => {
+      if (headerRef.current) {
+        headerRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, []);
+
+  return (
+    <LyricsContext.Provider value={{ state, dispatch }}>
+      <div className="app">
+        {/* Шапка */}
+        <header className="header">
+          <div className="nav-group">
+            <Link to="/biografy" className="nav-link">БИОГРАФИЯ</Link>
+            <Link to="/media" className="nav-link">МЕДИА</Link>
+          </div>
+
+          <div className="nav-group">
+            <Link to="/" className="logo">INSTASAMKA</Link>
+          </div>
+
+          <div className="nav-group">
+            <Link to="/music" className="nav-link" style={{ color: '#8B0000' }}>МУЗЫКА</Link>
+            <Link to="/contacts" className="nav-link">КОНТАКТЫ</Link>
+          </div>
+        </header>
+
+        {/* Главная картинка */}
+        <div className="main-image">
+          <img src={instasamkaImage} alt="Instasamka" />
+        </div>
+
+        {/* Музыка */}
+        <section className="music-page">
+
+          <h1 ref={headerRef} className="section-title">МУЗЫКА</h1>
+          
+          <div className="albums-grid">
+
+            {data.map(el=><CardMusic title={el.title} img={el.img} alt={el.alt} link={el.link}/>)}
+    
+          </div>
+
+          {/* Текста */}
+          <h1 className="text">ТЕКСТА</h1>
+          {/* Альбом 1 */}
+          <SongLyrics songTitle="BOSS" />
+
+          {/* Альбом 2 */}
+          <SongLyrics songTitle="АЛЬБОМ БУМЕРЫ И ЗУМЕРЫ INSTASAMKA & ЛЕНИНГРАД" />
+
+          {/* Альбом 3 */}
+          <SongLyrics songTitle="ТАК ХОЧУ" />
+
+          {/* Альбом 4 */}
+          <SongLyrics songTitle="KENDALL" />
+
+          {/* Альбом 5 */}
+          <SongLyrics songTitle="ТЫ И Я" />
+
+          {/* Альбом 6 */}
+          <SongLyrics songTitle="ПАМПИМ НЕФТЬ" />
+
+          {/* Альбом 7 */}
+          <SongLyrics songTitle="МОЙ МАРМЕЛАДНЫЙ" />
+
+          {/* Альбом 8 */}
+          <SongLyrics songTitle="ГРУСТНЫЙ ДЭНС" />
+
+          {/* Альбом 9 */}
+          <SongLyrics songTitle="СРЕДА" />
+
+          {/* Альбом 10 */}
+          <SongLyrics songTitle="ЗАЛЕТАЙ В ТРЕНДЫ" />
+
+          {/* Альбом 11 */}
+          <SongLyrics songTitle="НА ТИТАНИКЕ" />
+
+          {/* Альбом 12 */}
+          <SongLyrics songTitle="АЛЬФА-САМКА" />
+
+          {/* Альбом 13 */}
+          <SongLyrics songTitle="WHO I AM" />
+
+          {/* Альбом 14 */}
+          <SongLyrics songTitle="МАЛЕНЬКИЙ САМОЛЕТ" />
+
+          {/* Альбом 15 */}
+          <SongLyrics songTitle="БИЗНЕС КЛАСС" />
+
+          {/* Альбом 16 */}
+          <SongLyrics songTitle="В МОЕЙ ГОЛОВЕ" />
+
+          {/* Альбом 17 */}
+          <SongLyrics songTitle="BESTIE" />
+
+          {/* Альбом 18 */}
+          <SongLyrics songTitle="ОТКЛЮЧАЮ ТЕЛЕФОН" />
+
+          {/* Альбом 19 */}
+          <SongLyrics songTitle="АЛЬБОМ SPED UP ALBUM" />
+
+          {/* Альбом 20 */}
+          <SongLyrics songTitle="ТЯГИ" />
+
+          {/* Альбом 21 */}
+          <SongLyrics songTitle="ЖАРА" />
+
+          {/* Альбом 22 */}
+          <SongLyrics songTitle="SHAKE" />
+
+          {/* Альбом 23 */}
+          <SongLyrics songTitle="АЛЬБОМ POPSTAR INSTASAMKA" />
+
+          {/* Альбом 24 */}
+          <SongLyrics songTitle="АЛЬБОМ QUEEN OF RAP INSTASAMKA" />
+
+          {/* Альбом 25 */}
+          <SongLyrics songTitle="СНОВА?" />
+
+          {/* Альбом 26 */}
+          <SongLyrics songTitle="MONEY DAY" />
+
+          {/* Альбом 27 */}
+          <SongLyrics songTitle="ВИТОН 2" />
+
+          {/* Альбом 28 */}
+          <SongLyrics songTitle="АЛЬБОМ MONEYDEALER INSTASAMKA" />
+
+          {/* Альбом 29 */}
+          <SongLyrics songTitle="TERMINAL" />
+
+          {/* Альбом 30 */}
+          <SongLyrics songTitle="ФАКТ" />
+
+          {/* Альбом 31 */}
+          <SongLyrics songTitle="MOMMY" />
+
+          {/* Альбом 32 */}
+          <SongLyrics songTitle="АЛЬБОМ СЕМЕЙНЫЙ БИЗНЕС INSTASAMKA" />
+
+          {/* Альбом 33 */}
+          <SongLyrics songTitle="ГОБА" />
+
+          {/* Альбом 34 */}
+          <SongLyrics songTitle="RPG" />
+
+          {/* Альбом 35 */}
+          <SongLyrics songTitle="ВИТОН" />
+
+          {/* Альбом 36 */}
+          <SongLyrics songTitle="WORD UP" />
+
+          {/* Альбом 37 */}
+          <SongLyrics songTitle="АЛЬБОМ СПАСИБО ПАПАША INSTASAMKA" />
+
+          {/* Альбом 38 */}
+          <SongLyrics songTitle="POLAROID" />
+
+          {/* Альбом 39 */}
+          <SongLyrics songTitle="BLOODY PARTY" />
+
+          {/* Альбом 40 */}
+          <SongLyrics songTitle="АЛЬБОМ MAMACITA INSTASAMKA" />
+
+          {/* Альбом 41 */}
+          <SongLyrics songTitle="ИНТЕРВЬЮ" />
+
+          {/* Альбом 42 */}
+          <SongLyrics songTitle="GTA" />
+
+          {/* Альбом 43 */}
+          <SongLyrics songTitle="АЛЬБОМ BORN TO FLEX INSTASAMKA" />
+          
+          {/* Альбом 44 */}
+          <SongLyrics songTitle="АЛЬБОМ ТРИПЛ МАЛЫШ INSTASAMKA" />
+
+          {/* Альбом 45 */}
+          <SongLyrics songTitle="МЫ КРУТЫЕ" />
+
+          {/* Альбом 46 */}
+          <SongLyrics songTitle="МОЕ ИМЯ ДАША" />
+
+          {/* Альбом 47 */}
+          <SongLyrics songTitle="HEAVY METAL" />
+
+          {/* Альбом 48 */}
+          <SongLyrics songTitle="НА ХОДУ" />
+
+          {/* Альбом 49 */}
+          <SongLyrics songTitle="TRIPLE BABY TOUR" />
+
+          {/* Альбом 50 */}
+          <SongLyrics songTitle="ARIFLAME" />
+
+          {/* Альбом 51 */}
+          <SongLyrics songTitle="KUPIDON" />
+
+          {/* Альбом 52 */}
+          <SongLyrics songTitle="SPLASH OUT" />
+
+        </section>
+
+        {/* Кнопка "Вверх" */}
+
+        <button 
+          className="scroll-to-top" 
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Наверх">
+          ↑
+      </button>
+
+      </div>
+    </LyricsContext.Provider>
   );
 }
 
