@@ -106,11 +106,10 @@ body {
   font-size: 48px;
   text-align: left;
   margin-bottom: 50px;
-  text-transform: uppercase;
 }
 
 .media-page .collaboration {
-  margin: 50px 0;
+  margin: 50px 0;      /* верх/низ, лево/право */
 }
 
 .media-page .collab-title {
@@ -131,7 +130,7 @@ body {
 .media-page .collab-image {
   width: 100%;
   max-height: 600px;
-  object-fit: cover;
+  object-fit: cover;       /* Заполняет весь контейнер, обрезая лишнее */
 }
 
 .media-page .backstage {
@@ -164,7 +163,7 @@ body {
   max-width: 45%; 
   font-size: 18px;
   line-height: 1.6;
-  text-align: justify;
+  text-align: justify;  /* Растягивает текст во всю ширину, выравнивания по обе стороны */
   color: #696969;
 }
 
@@ -174,11 +173,11 @@ body {
   justify-content: center;
   gap: 80px; 
   margin-top: 40px;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;     /* Перенос текста */
 }
 
 .media-page .clip-item {
-  flex: 1 1 45%; 
+  flex: 1 1 45%;   /* grow (увеличивается, чтоб занять место, пропорционально), shrink (уменьшается, чтоб освободить место, пропорционально), 45% - начальная ширина*/
   max-width: 45%;
   text-align: center;
 }
@@ -213,12 +212,11 @@ body {
   font-size: 48px;
   text-align: left;
   margin-bottom: 50px;
-  text-transform: uppercase;
 }
 
 .gallery .gallery-photo {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap;   /* Перенос текста */
   gap: 20px;
   justify-content: center;
   width: 100%;
@@ -256,7 +254,6 @@ body {
   text-align: left;
   margin-bottom: 5px;
   margin-top: 30px;
-  text-transform: uppercase;
 }
 
 .contact .contacts-container {
@@ -294,6 +291,31 @@ body {
   margin: 0 0 50px;
   font-size: 18px;
   text-decoration: none;
+}
+
+/* Кнопка "Вверх" */
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #FFFFFF;
+  color: #000000;
+  font-size: 24px;
+  border: none;          /* Нет границ */
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-to-top:hover {
+  background-color: #8B0000;
+  outline: none;         /* Скрывает контур вокруг элемента при его выделении */
 }
 
 /* Адаптив */
