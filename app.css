@@ -73,7 +73,7 @@ body {
   max-height: 770px;
   width: auto;
   max-width: 100%;
-  object-fit: contain;   /* Полностью помещается в контейнер */
+  object-fit: contain;   /* Полностью помещается в контейнер с сохранением пропорций */
 }
 
 /* Секции */
@@ -131,7 +131,7 @@ th {
 .concert-link {
   color: #FFFFFF;
   text-decoration: none;
-  display: block;
+  display: block;        /* Блочный элемент, занимает всю ширину  */
   padding-left: 20px;
 }
 
@@ -265,6 +265,32 @@ th {
   text-align: center;
 }
 
+/* Кнопка "Вверх" */
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: #FFFFFF; 
+  color: #000000;
+  font-size: 24px;
+  border: none;       /* Нет границ */
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-to-top:hover {
+  background-color: #8B0000;
+  outline: none;         /* Скрывает контур вокруг элемента при его выделении */
+}
+
+
 /* Адаптив */
 @media (max-width: 1000px) {
   .header {
@@ -317,4 +343,11 @@ th {
   .contact-info {
     font-size: 20px;
   }
+
+  
 }
+
+
+
+
+
