@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './media.css';
 
@@ -15,6 +15,17 @@ import photo2 from './img/photo2.jpg';
 import photo3 from './img/photo3.jpg';
 
 function Media() {
+
+  // Пролистывание
+
+  const headerRef = useRef(null);
+  
+    useEffect(() => {
+      if (headerRef.current) {
+        headerRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, []);
+
   return (
     <div className="app">
       {/* Шапка */}
@@ -41,7 +52,7 @@ function Media() {
 
       {/* Медиа */}
       <section className="media-page">
-        <h1 className="section-title">МЕДИА</h1>
+        <h1 ref={headerRef} className="section-title">МЕДИА</h1>
 
         <div className="collaboration">
           <div className="collab-images">
@@ -130,6 +141,16 @@ function Media() {
           </div>
         </div>
       </section>
+
+
+      {/* Кнопка "Вверх" */}
+
+      <button 
+        className="scroll-to-top" 
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label="Наверх">
+        ↑
+      </button>
 
     </div>
   );
