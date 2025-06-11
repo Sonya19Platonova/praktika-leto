@@ -1,10 +1,21 @@
-import React from 'react'; 
+import React, { useRef, useEffect } from 'react'; 
 import { Link } from 'react-router-dom';
 import './biografy.css';
 
 import instasamkaImage from './img/INSTASAMKA1.png';
 
 function Biografy() {
+
+  // Пролистывание
+
+  const headerRef = useRef(null);
+  
+    useEffect(() => {
+      if (headerRef.current) {
+        headerRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, []);
+
   return (
     <div className="app">
       {/* Шапка */}
@@ -32,7 +43,7 @@ function Biografy() {
 
       {/* Биография */}
       <section className="biografy-page">
-        <h1 className="biografy-title">INSTASAMKA - российская поп-певица и рэп-исполнительница, тиктокер.</h1>
+        <h1 ref={headerRef} className="biografy-title">INSTASAMKA - российская поп-певица и рэп-исполнительница, тиктокер.</h1>
         
         <div className="biografy-content">
           <p>В 2017 году начала снимать видео разговорного жанра и короткие комедийные ролики — вайны; 
@@ -122,6 +133,17 @@ function Biografy() {
 
         </div>
       </section>
+
+
+      {/* Кнопка "Вверх" */}
+
+      <button 
+        className="scroll-to-top" 
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label="Наверх">
+        ↑
+      </button>
+
     </div>
   );
 }
